@@ -159,8 +159,10 @@ public class GLEA_new extends Algorithm{
 		double[] newEncode = new double[groupSize_];
 		for(int j=0;j<groupSize_;j++) {
 			newEncode[j] = encodedParents[0][j] + learningRate*(encodedParents[1][j] - encodedParents[2][j]);
-			if(newEncode[j] < encodedParents[0][j]*0.3) { newEncode[j] = encodedParents[0][j]*0.3; } 
+			if(newEncode[j] < encodedParents[0][j]*0.3) { newEncode[j] = encodedParents[0][j]*0.3; }
+		        if(encodedParents[0][j]*0.3 <= 0.0) { newEncode[j] = 0.00001; }
 			if(newEncode[j] > encodedParents[0][j]*3.0) { newEncode[j] = encodedParents[0][j]*3.0; }
+			if(encodedParents[0][j]*3.0 >= 1.0) { newEncode[j] = 0.99999; }
 		}
 		return newEncode;
 	}
