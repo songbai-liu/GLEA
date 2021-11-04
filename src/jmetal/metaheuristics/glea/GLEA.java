@@ -220,11 +220,10 @@ public class GLEA extends Algorithm{
 					weight[2][j] += (ss2.getValue(group_[j][g]) - LB_[group_[j][g]])/(UB_[group_[j][g]] - LB_[group_[j][g]])/group_[j].length;
 				}
 				double w = weight[0][j] + r1*(weight[1][j] - weight[2][j]);//learning in the weighted space, i.e., weighted optimization
-				if(w < alph*weight[0][j]) {
-					w = alph*weight[0][j]; 
-				}else if(w > beta*weight[0][j]){ 
-					w = beta*weight[0][j]; 
-				}
+				if(w < alph*weight[0][j]) w = alph*weight[0][j]; 
+				if(alph*weight[0][j] <= 0.0) w = 0.00001; 
+				if(w > beta*weight[0][j]) w = beta*weight[0][j]; 
+				if(beta*weight[0][j] >= 1.0) w = 0.99999;
 				double val;
 				for(int m=0;m<group_[j].length;m++){//Recover to the original variable space
 					val = w*group_[j].length*(xChild.getValue(group_[j][m]) - LB_[group_[j][m]])/(UB_[group_[j][m]] - LB_[group_[j][m]])/sum;
